@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://firetoad72.github.io/firetoad/sitemap.xml
