@@ -79,3 +79,9 @@ footer.bottom a { color: var(--muted); }
   .hero .logo { max-width: 220px; order: -1; }
   nav.links { gap: 12px; font-size: 14px; }
 }
+.brand { white-space: nowrap; }
+@media (max-width: 420px) {
+  .brand { font-size: 17px; gap: 8px; }
+  .brand img { width: 30px; height: 30px; }
+  nav.links { gap: 10px; font-size: 13.5px; }
+}
