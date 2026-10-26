@@ -4,14 +4,39 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Fire Toad — fire safety inspections, reports and AFSS on your phone</title>
-<meta name="description" content="Fire Toad is an offline field app for fire safety practitioners: buildings and schedules, guided site inspections, defects, a branded assessment report and the NSW AFSS form. Put your own company on every report.">
+<meta name="description" content="Fire Toad is an offline iPhone app for fire safety practitioners: buildings and schedules, guided site inspections, defects, a branded assessment report and the NSW AFSS form. Free to download.">
+<link rel="canonical" href="https://firetoad72.github.io/firetoad/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Fire Toad">
+<meta property="og:locale" content="en_AU">
 <meta property="og:title" content="Fire Toad — fire safety inspections on your phone">
-<meta property="og:description" content="Guided inspections, defects, a branded assessment report and the NSW AFSS form. Works offline. Your company on every report.">
-<meta property="og:image" content="firetoad-logo.jpg">
+<meta property="og:description" content="Guided inspections, defects, a branded assessment report and the NSW AFSS form. Works offline.">
+<meta property="og:url" content="https://firetoad72.github.io/firetoad/">
+<meta property="og:image" content="https://firetoad72.github.io/firetoad/firetoad-logo.jpg">
 <meta name="theme-color" content="#1c1410">
 <link rel="icon" href="firetoad-logo.jpg">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="stylesheet" href="style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Fire Toad",
+  "description": "An iPhone app for fire safety practitioners: buildings and fire safety schedules, guided site inspections, defects, the Fire Safety Assessment Report and the NSW annual fire safety statement form. Works offline with no account.",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "iOS",
+  "inLanguage": "en-AU",
+  "url": "https://firetoad72.github.io/firetoad/",
+  "installUrl": "https://apps.apple.com/app/id6818058403",
+  "image": "https://firetoad72.github.io/firetoad/media/fire-toad-icon-1024.png",
+  "publisher": { "@type": "Organization", "name": "Fire Toad", "url": "https://firetoad72.github.io/firetoad/", "email": "firetoad42@gmail.com" },
+  "offers": [
+    { "@type": "Offer", "name": "Fire Toad (free download)", "price": "0", "priceCurrency": "AUD", "url": "https://apps.apple.com/app/id6818058403" },
+    { "@type": "Offer", "name": "Fire Toad Pro Monthly", "description": "In-app auto-renewing subscription, billed monthly.", "price": "19.99", "priceCurrency": "AUD", "priceSpecification": { "@type": "UnitPriceSpecification", "price": "19.99", "priceCurrency": "AUD", "billingDuration": "P1M", "unitCode": "MON" }, "url": "https://firetoad72.github.io/firetoad/pricing/" },
+    { "@type": "Offer", "name": "Fire Toad Pro Yearly", "description": "In-app auto-renewing subscription, billed yearly.", "price": "149.99", "priceCurrency": "AUD", "priceSpecification": { "@type": "UnitPriceSpecification", "price": "149.99", "priceCurrency": "AUD", "billingDuration": "P1Y", "unitCode": "ANN" }, "url": "https://firetoad72.github.io/firetoad/pricing/" }
+  ]
+}
+</script>
 </head>
 <body>
 <header class="top">
@@ -19,6 +44,8 @@
     <a class="brand" href="./"><img src="firetoad-logo.jpg" alt="">Fire Toad</a>
     <nav class="links" aria-label="Site">
       <a href="./" aria-current="page">Home</a>
+      <a href="features/">Features</a>
+      <a href="pricing/">Pricing</a>
       <a href="guides/">Guides</a>
       <a href="support/">Support</a>
       <a href="privacy/">Privacy</a>
@@ -27,41 +54,81 @@
 </header>
 
 <main>
-  <div class="wrap hero">
+  <div class="wrap hero has-video">
     <div>
       <h1>Fire safety inspections, <em>done on site</em>.</h1>
-      <p class="lead">Fire Toad is a field app for fire safety practitioners. Walk the building, record every essential measure, log defects, then hand over a clean assessment report and prepare the NSW Annual Fire Safety Statement. It all runs on your phone, with no account and no signal needed.</p>
+      <p class="lead">Fire Toad is an iPhone app for fire safety practitioners. Walk the building, record every essential measure, log defects, then hand over a clean assessment report and prepare the NSW Annual Fire Safety Statement. It all runs on your phone, with no account and no signal needed.</p>
       <div class="cta">
         <a class="btn primary" href="https://apps.apple.com/app/id6818058403">Get Fire Toad on the App Store</a>
-        <a class="btn" href="#features">See what it does</a>
+        <a class="btn" href="features/">See every feature</a>
       </div>
-      <p class="note">iPhone: free to download. Your first 3 reports include sharing, emailing, printing, your company branding and the AFSS document; after that, those need Fire Toad Pro, a monthly or yearly subscription with the same features. Recording inspections is always free. Android: every feature included.</p>
+      <p class="note">Free to download. Your first 3 reports include sharing, emailing, printing, your company branding and the AFSS document; after that, those need Fire Toad Pro, a monthly or yearly subscription with the same features. Recording inspections is always free. <a href="pricing/">See pricing</a>.</p>
     </div>
-    <img class="logo" src="firetoad-logo.jpg" alt="The Fire Toad logo: a pixel-art toad in flames">
+    <figure class="preview">
+      <video controls muted playsinline preload="none" width="886" height="1920" poster="media/fire-toad-preview-poster.jpg" aria-label="Fire Toad App Preview: a building, its schedule, a site inspection and the finished report">
+        <source src="media/fire-toad-preview-886x1920.mp4" type="video/mp4">
+        <a href="media/fire-toad-preview-886x1920.mp4">Watch the Fire Toad App Preview (MP4, 25 seconds)</a>
+      </video>
+      <figcaption>Fire Toad in 25 seconds. Fictional demo data.</figcaption>
+    </figure>
   </div>
+
+  <section id="how-it-works">
+    <div class="wrap">
+      <h2>How it works</h2>
+      <p class="sub">Three steps, from the fire safety schedule to the report in your client's inbox.</p>
+      <ol class="how">
+        <li>
+          <div>
+            <span class="num" aria-hidden="true">1</span>
+            <h3>Set up the building once</h3>
+            <p>Add the building, its BCA classes and AFSS due date, then tick its measures from a list of 30. Each one comes with its standard of performance and AS 1851 service frequency filled in.</p>
+          </div>
+          <img src="screenshots/1.3/04-add-measures-360.jpg" srcset="screenshots/1.3/04-add-measures-360.jpg 360w, screenshots/1.3/04-add-measures-720.jpg 720w" sizes="(max-width: 760px) 104px, 250px" width="720" height="1565" loading="lazy" decoding="async" alt="The Add measures sheet in Fire Toad with fire hose reel and automatic fire sprinkler system ticked, each with its standard edition and marked Essential.">
+        </li>
+        <li>
+          <div>
+            <span class="num" aria-hidden="true">2</span>
+            <h3>Inspect measure by measure</h3>
+            <p>Tick what you verified, mark each measure Satisfactory, Defect or N/A, and add notes and photos. Defects are logged as you go, and unsaved work comes back if the app closes.</p>
+          </div>
+          <img src="screenshots/1.3/05-inspection-360.jpg" srcset="screenshots/1.3/05-inspection-360.jpg 360w, screenshots/1.3/05-inspection-720.jpg 720w" sizes="(max-width: 760px) 104px, 250px" width="720" height="1565" loading="lazy" decoding="async" alt="A Fire Toad site inspection at Riverside Apartments: the automatic fire detection and alarm system marked Satisfactory, with three checklist items ticked.">
+        </li>
+        <li>
+          <div>
+            <span class="num" aria-hidden="true">3</span>
+            <h3>Complete it and send the report</h3>
+            <p>Completing the inspection produces the report, with a reference number and your sign-off. Share, email or print the PDF under your company's letterhead, then prepare the NSW AFSS from it.</p>
+          </div>
+          <img src="screenshots/1.3/01-report-360.jpg" srcset="screenshots/1.3/01-report-360.jpg 360w, screenshots/1.3/01-report-720.jpg 720w" sizes="(max-width: 760px) 104px, 250px" width="720" height="1565" loading="lazy" decoding="async" alt="A Fire Toad report with Share PDF, Email report and Print buttons above the Acme Fire Safety letterhead and the Fire Safety Assessment Report title.">
+        </li>
+      </ol>
+    </div>
+  </section>
 
   <section id="features">
     <div class="wrap">
       <h2>Everything for the inspection, in one place</h2>
       <p class="sub">Built around how an Accredited Practitioner (Fire Safety) actually works a site: schedule in hand, measure by measure.</p>
       <div class="grid">
-        <div class="card"><h3>Buildings &amp; schedules</h3><p>Each building with its BCA class, owner and current fire safety schedule. Pick each essential measure and its standard of performance from a list, with editions, instead of typing them.</p></div>
-        <div class="card"><h3>Guided site inspections</h3><p>Work through every measure with a checklist of what to verify. Mark it satisfactory, defective or N/A, and add your own notes.</p></div>
+        <div class="card"><h3>Buildings &amp; schedules</h3><p>Each building with its BCA classes, owner and current fire safety schedule. Pick each essential measure and the edition of its standard from a list, instead of typing them.</p></div>
+        <div class="card"><h3>Guided site inspections</h3><p>Work through every measure with a checklist of what to verify and last inspection's notes. Mark it Satisfactory, Defect or N/A, and add your own notes and photos.</p></div>
         <div class="card"><h3>Defects</h3><p>Log critical and non-critical defects against a measure, add photos, and track them until they're rectified.</p></div>
-        <div class="card"><h3>Assessment report</h3><p>Finish the inspection and get a full Fire Safety Assessment Report: measures, results, checklists, comments and defects. One tap shares it as a PDF.</p></div>
-        <div class="card"><h3>NSW AFSS</h3><p>Fill the official NSW Annual Fire Safety Statement template from the inspection, and keep track of AFSS anniversaries and supplementary statements.</p></div>
+        <div class="card"><h3>Assessment report</h3><p>Finish the inspection and get a full Fire Safety Assessment Report: measures, results, checklists, comments, photos and defects. One tap shares it as a PDF.</p></div>
+        <div class="card"><h3>NSW AFSS</h3><p>A readiness check lists what stands in the way, then Fire Toad fills the official NSW fire safety statement form as a Word document. What's due tracks AFSS and supplementary statement dates.</p></div>
         <div class="card"><h3>AS 1851 logbook</h3><p>Record routine service activities per measure and export the logbook as CSV.</p></div>
-        <div class="card"><h3>Practitioner toolkit</h3><p>Search the standards, browse every essential measure, classify defects, check AFSS readiness, and test yourself with the quiz. All of it works offline.</p></div>
+        <div class="card"><h3>Practitioner toolkit</h3><p>Ask the standards search a question and get paraphrased requirements with clause numbers. Browse the 28 essential measures, classify defects, check AFSS readiness and test yourself with the quiz. All of it works offline.</p></div>
         <div class="card"><h3>Your data stays on your phone</h3><p>No account, no cloud, no tracking. Everything is stored on your device, and one tap saves a backup file you can restore on a new phone.</p></div>
       </div>
+      <p class="after-grid"><a class="more" href="features/">See every feature, with Free and Pro marked &rarr;</a></p>
     </div>
   </section>
 
   <section id="your-company">
     <div class="wrap brandstrip">
       <div>
-        <h2>Your company on every report</h2>
-        <p class="sub">Fire Toad isn't just for one business. Add your company's name, logo, ABN, licence and contact details once, and every report carries your branding instead of ours. On iPhone, company branding is part of Fire Toad Pro and is included on your first 3 reports.</p>
+        <h2>Your company on your reports</h2>
+        <p class="sub">Fire Toad isn't just for one business. Add your company's name, logo, ABN, licence and contact details once, and your reports carry your branding instead of ours. Company branding is part of Fire Toad Pro and is included on your first 3 reports.</p>
         <ul class="checks">
           <li>Add as many companies as you work under</li>
           <li>Pick the company for each report from a dropdown</li>
@@ -84,6 +151,19 @@
     </div>
   </section>
 
+  <section id="pricing">
+    <div class="wrap">
+      <h2>Free to download. Pro when you send reports.</h2>
+      <p class="sub">Buildings, schedules, inspections, photos, defects, report history, backups and the Toolkit are always free. Your first 3 reports include Pro.</p>
+      <div class="price-strip">
+        <div class="card"><h3>Free <span class="amt">A$0</span></h3><p>Record everything, on every building. Your first 3 reports include sharing, emailing, printing, your company branding and the NSW statement document.</p></div>
+        <div class="card"><h3>Pro Monthly <span class="amt">A$19.99 <small>a month</small></span></h3><p>Share, email and print every report, the NSW AFSS Word document and your company branding. Renews monthly until you cancel.</p></div>
+        <div class="card"><h3>Pro Yearly <span class="amt">A$149.99 <small>a year</small></span></h3><p>The same features as Monthly, and saves 37% on 12 months of Monthly. Renews yearly until you cancel.</p></div>
+      </div>
+      <p class="after-grid"><a class="more" href="pricing/">Pricing details, cancelling and FAQ &rarr;</a> <span class="small">Bought Fire Toad before version 1.3? You keep Pro at no extra cost.</span></p>
+    </div>
+  </section>
+
   <section>
     <div class="wrap">
       <h2>A record-keeping tool, not a certifier</h2>
@@ -95,7 +175,7 @@
 <footer class="bottom">
   <div class="wrap">
     <span>© 2026 Fire Toad</span>
-    <span><a href="guides/">Guides</a> · <a href="support/">Support</a> · <a href="privacy/">Privacy policy</a></span>
+    <span><a href="features/">Features</a> · <a href="pricing/">Pricing</a> · <a href="guides/">Guides</a> · <a href="support/">Support</a> · <a href="press/">Press</a> · <a href="privacy/">Privacy policy</a></span>
   </div>
 </footer>
 </body>

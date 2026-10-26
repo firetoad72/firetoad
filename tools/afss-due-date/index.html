@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AFSS due-date helper (NSW): next due date and 3-month assessment window — Fire Toad</title>
+<meta name="description" content="Free NSW AFSS due-date helper: enter the last annual fire safety statement, fire safety certificate or council due date, and see the next due date, days left, the 3-month assessment window and a calendar file. Runs in your browser.">
+<link rel="canonical" href="https://firetoad72.github.io/firetoad/tools/afss-due-date/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Fire Toad">
+<meta property="og:locale" content="en_AU">
+<meta property="og:title" content="AFSS due-date helper (NSW)">
+<meta property="og:description" content="Next annual fire safety statement due date, days left, the 3-month assessment window and an add-to-calendar file. Free, runs in your browser.">
+<meta property="og:url" content="https://firetoad72.github.io/firetoad/tools/afss-due-date/">
+<meta property="og:image" content="https://firetoad72.github.io/firetoad/firetoad-logo.jpg">
+<meta name="theme-color" content="#1c1410">
+<link rel="icon" href="../../firetoad-logo.jpg">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+<link rel="stylesheet" href="../../style.css">
+<link rel="stylesheet" href="../../guides/guides.css">
+<style>
+  .tool { background: var(--card); border: 1px solid var(--line); border-top: 3px solid var(--ember-d); border-radius: 16px; padding: 20px; margin: 22px 0 8px; }
+  .tool fieldset { border: 0; margin: 0 0 18px; padding: 0; min-width: 0; }
+  .tool legend { font-weight: 700; font-size: 18px; margin: 0 0 10px; padding: 0; }
+  .opt { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; margin-bottom: 8px; cursor: pointer; }
+  .opt input { margin: 3px 0 0; width: 20px; height: 20px; flex: none; accent-color: #e2451a; }
+  .opt span small { display: block; color: var(--muted); font-size: 14px; }
+  .opt:has(input:checked) { border-color: #a88670; background: #2d1f17; }
+  .row { display: grid; gap: 16px; grid-template-columns: 1fr 1fr; margin-bottom: 18px; }
+  .lab { display: block; font-weight: 700; margin: 0 0 6px; }
+  .lab .opt-tag { font-weight: 400; color: var(--muted); }
+  .tool input[type=date], .tool input[type=text] { width: 100%; min-height: 48px; padding: 10px 12px; border-radius: 12px; border: 1px solid #a88670; background: #1c1410; color: var(--text); font: inherit; color-scheme: dark; }
+  .tool input[aria-invalid=true] { border-color: #ffb3a1; }
+  .hint { font-size: 14px; color: var(--muted); margin: 6px 0 0; }
+  .tool button.btn { cursor: pointer; font: inherit; font-weight: 700; }
+  .tool button.btn:not(.primary) { background: transparent; color: var(--text); }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  a:focus-visible, .btn:focus-visible, .tool input:focus-visible, .opt:has(input:focus-visible) { outline: 3px solid #ff8a5c; outline-offset: 2px; }
+  .err { color: #ffb3a1; font-weight: 700; margin: 0 0 14px; }
+  .err:empty { display: none; }
+  #result { margin-top: 22px; border-top: 1px solid var(--line); padding-top: 18px; }
+  #result[hidden] { display: none; }
+  #result h2 { font-size: 15px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin: 0 0 4px; }
+  #result h2:focus { outline: none; }
+  .due { font-size: clamp(25px, 5vw, 34px); font-weight: 800; letter-spacing: -0.01em; line-height: 1.15; margin: 0 0 8px; }
+  .pill { display: inline-block; padding: 3px 12px; border-radius: 999px; font-weight: 700; font-size: 16px; }
+  .pill.ok { background: #1d2e24; color: var(--ok); }
+  .pill.soon { background: #3d2f12; color: #f5d08a; }
+  .pill.late { background: #4a1a12; color: #ffb3a1; }
+  dl.facts { display: grid; grid-template-columns: minmax(150px, max-content) 1fr; gap: 10px 18px; margin: 18px 0; }
+  dl.facts dt { font-weight: 700; color: var(--text); }
+  dl.facts dd { margin: 0; color: #e9d9c6; }
+  dl.facts dd small { display: block; color: var(--muted); font-size: 14px; margin-top: 2px; }
+  .notes { margin: 0 0 16px; padding-left: 20px; }
+  .notes li { margin-bottom: 6px; color: #e9d9c6; }
+  .notes li.warn { color: #ffb3a1; }
+  .doc .box.sfss { border-left: 3px solid #f5d08a; }
+  @media (max-width: 560px) {
+    .row { grid-template-columns: 1fr; }
+    dl.facts { grid-template-columns: 1fr; gap: 2px; }
+    dl.facts dd { margin-bottom: 10px; }
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../../"><img src="../../firetoad-logo.jpg" alt="">Fire Toad</a>
+    <nav class="links" aria-label="Site">
+      <a href="../../">Home</a>
+      <a href="../../features/">Features</a>
+      <a href="../../pricing/">Pricing</a>
+      <a href="../../guides/">Guides</a>
+      <a href="../../support/">Support</a>
+      <a href="../../privacy/">Privacy</a>
+    </nav>
+  </div>
+</header>
+
+<main class="doc">
+  <p class="crumbs"><a href="../../">Home</a> / <a href="../../free/">Free downloads</a> / AFSS due-date helper</p>
+  <h1>AFSS due-date helper (NSW)</h1>
+  <p class="meta">Last reviewed 25 October 2026 · Free · Runs in your browser</p>
+  <p class="lede">Work out when a building's next annual fire safety statement is due, how many days are left, and the window in which the measures must be assessed and the exits inspected. Everything is worked out on your device. Nothing you type is sent anywhere or stored.</p>
+
+  <form class="tool" id="afss-form" novalidate>
+    <fieldset>
+      <legend>Which date do you have?</legend>
+      <label class="opt"><input type="radio" name="basis" value="afss" checked><span>The date the last annual fire safety statement was given to the council<small>The next one is due 12 months later.</small></span></label>
+      <label class="opt"><input type="radio" name="basis" value="fsc"><span>The date the fire safety certificate was issued<small>For a new building or new work with no annual statement since. The first one is due 12 months later.</small></span></label>
+      <label class="opt"><input type="radio" name="basis" value="due"><span>The AFSS due date the council has on record<small>The building's anniversary, as the council holds it.</small></span></label>
+    </fieldset>
+
+    <div class="row">
+      <div>
+        <label class="lab" for="date">Date</label>
+        <input type="date" id="date" name="date" required aria-describedby="date-hint" placeholder="dd/mm/yyyy" autocomplete="off">
+        <p class="hint" id="date-hint">If a fire safety certificate was issued after the last statement, use the later of the two dates.</p>
+      </div>
+      <div>
+        <label class="lab" for="issue">Planned issue date <span class="opt-tag">(optional)</span></label>
+        <input type="date" id="issue" name="issue" aria-describedby="issue-hint" placeholder="dd/mm/yyyy" autocomplete="off">
+        <p class="hint" id="issue-hint">When the owner plans to sign. Leave blank to use the due date.</p>
+      </div>
+    </div>
+    <div class="row" style="grid-template-columns:1fr">
+      <div>
+        <label class="lab" for="bldg">Building name <span class="opt-tag">(optional, for the calendar file)</span></label>
+        <input type="text" id="bldg" name="bldg" maxlength="80" autocomplete="off" placeholder="For example, Riverside Apartments">
+      </div>
+    </div>
+
+    <p class="err" id="err" role="alert"></p>
+    <div class="actions">
+      <button type="submit" class="btn primary">Work it out</button>
+    </div>
+
+    <section id="result" hidden aria-labelledby="res-h">
+      <h2 id="res-h" tabindex="-1">Next annual fire safety statement due</h2>
+      <p class="due" id="res-due"></p>
+      <p><span class="pill" id="res-pill"></span></p>
+      <dl class="facts">
+        <dt>Assessment window</dt>
+        <dd id="res-window"></dd>
+        <dt>Then</dt>
+        <dd>Give the council a copy by the due date. Send a copy, with the current fire safety schedule, to Fire and Rescue NSW as soon as practicable, and display a copy with the schedule in a prominent place in the building.</dd>
+        <dt>The one after</dt>
+        <dd id="res-next"></dd>
+      </dl>
+      <ul class="notes" id="res-notes"></ul>
+      <div class="actions">
+        <button type="button" class="btn" id="ics">Add to calendar (.ics)</button>
+      </div>
+      <p class="hint">The calendar file has two all-day events, the due date (with reminders 30 and 7 days before) and the day the assessment window opens. It is made on your device.</p>
+    </section>
+  </form>
+  <noscript><p class="box warn">This helper needs JavaScript to work out the dates. The rules it uses are set out below.</p></noscript>
+
+  <div class="box sfss">
+    <p><strong>Critical measures run on their own cycle.</strong> If the fire safety schedule marks any measure as a critical fire safety measure, it also needs a supplementary fire safety statement at the interval the schedule sets, with the assessment dated within the 1 month before each supplementary statement is issued. This helper does not work those dates out.</p>
+  </div>
+
+  <h2 id="how">How it works</h2>
+  <ul>
+    <li><strong>Due date.</strong> The owner must give the council an annual fire safety statement each year (s&nbsp;89 of the Regulation). It is due 12 months after the last annual statement was given or, if a fire safety certificate was issued within the previous 12 months, 12 months after that certificate, whichever is later (s&nbsp;89(2), as summarised by Fire Protection Association Australia). For the last statement or certificate date, the helper adds 12 calendar months. A due date the council holds is used as entered.</li>
+    <li><strong>Assessment window.</strong> The notes to the approved fire safety statement form say the measures must be assessed, and the exits inspected, within the 3 months before the date the annual statement is issued (s&nbsp;88). The helper counts the window from the day after the date 3 months before issue, so a date it shows is safely inside.</li>
+    <li><strong>After issue.</strong> A copy goes to the council, and a copy with the current fire safety schedule goes to Fire and Rescue NSW as soon as practicable. A copy with the schedule is displayed in the building (s&nbsp;89).</li>
+    <li><strong>Month ends.</strong> When the month it lands in is shorter, the helper uses the last day of that month: 12 months after 29 February 2024 is 28 February 2025, and 3 months before 31 May is the end of February. The Regulation doesn't spell this out, so check with the council.</li>
+    <li><strong>Late statements.</strong> Councils can issue a penalty notice for each week a statement is overdue (Schedule&nbsp;1 of the Regulation). If you're late or about to be, contact the council.</li>
+  </ul>
+
+  <h2 id="limits">What this helper can't tell you</h2>
+  <ul>
+    <li><strong>The council's own date.</strong> Councils word the 12-month rule differently: 12 months from when the last statement was lodged, from when it was issued, or a fixed anniversary. The date the council holds for the building is the one that counts, so confirm it.</li>
+    <li><strong>Whether lodging early moves the next date.</strong> Where a council counts from the date it received the last statement, giving it one early can bring the next due date forward.</li>
+    <li><strong>Extensions.</strong> Some councils say they can't extend the due date; others may give a short extension in some cases. Ask yours.</li>
+    <li><strong>Supplementary statements</strong> for critical fire safety measures, which follow the intervals on the fire safety schedule.</li>
+  </ul>
+
+  <section class="cta-box" aria-label="About Fire Toad">
+    <h2>Keep every building's dates in one place</h2>
+    <p>Fire Toad is an iPhone app for fire safety practitioners. Each building carries its AFSS due date with a days-left countdown, and What's due lists upcoming AFSS dates and the supplementary statement dates for critical measures, highlighting anything due within 30 days. When you mark a statement issued, the building's AFSS due date rolls forward to the next cycle. It works offline and needs no account.</p>
+    <a class="btn primary" href="https://apps.apple.com/app/id6818058403">Get Fire Toad on the App Store</a>
+    <p class="note">Free to download, with your first 3 reports included. Fire Toad Pro, a monthly or yearly subscription, covers reports after that.</p>
+  </section>
+
+  <h2 id="sources">Sources</h2>
+  <ul class="sources">
+    <li><a href="https://www.planning.nsw.gov.au/sites/default/files/2023-03/fire-safety-statement-template-version-4.docx">Fire safety statement template, version 4 (DOCX), including its notes</a> <span>· NSW Planning (3-month and 1-month assessment windows; sections 88 and 90; copies and display)</span></li>
+    <li><a href="https://www.planning.nsw.gov.au/sites/default/files/2023-03/fire-safety-statements-faq.pdf">Fire safety statements: frequently asked questions (PDF)</a> <span>· NSW Planning (annual and supplementary statements; critical fire safety measures)</span></li>
+    <li><a href="https://www.planning.nsw.gov.au/sites/default/files/2023-03/epaa-development-certification-and-fire-safety-regulation-2021-new-clause-references.pdf">New clause references (PDF)</a> <span>· NSW Planning (sections 88 to 92)</span></li>
+    <li><a href="https://www.fpaa.com.au/Common/Uploaded%20files/Website/3.%20Accreditation/2024_FPA%20Australia%20-%20GPG%2004%20V3%20NSW%20AFSS.pdf">GPG-04 Fire safety statements, New South Wales, version 3.0 (PDF)</a> <span>· Fire Protection Association Australia, August 2024 (s&nbsp;89(2) due date; penalty notices)</span></li>
+    <li><a href="https://legislation.nsw.gov.au/view/html/inforce/current/sl-2021-0689">Environmental Planning and Assessment (Development Certification and Fire Safety) Regulation 2021</a> <span>· NSW Legislation</span></li>
+    <li><a href="https://www.northsydney.nsw.gov.au/getting-construction-underway/submit-annual-fire-safety-statement/print">Annual fire safety statement</a> <span>· North Sydney Council (due 12 months from the last lodgement; no reminders)</span></li>
+    <li><a href="https://www.innerwest.nsw.gov.au/building-and-environment/annual-fire-safety-statements-afss">Annual fire safety statements (AFSS)</a> <span>· Inner West Council (due date; extensions)</span></li>
+  </ul>
+
+  <div class="disclaimer">
+    <p>This is a helper, not legal advice. The building's own anniversary date, as the council records it, governs, and the council's requirements apply. The helper summarises the Environmental Planning and Assessment (Development Certification and Fire Safety) Regulation 2021 and the approved form's notes as at the review date; check the current versions before relying on it. Fire Toad is not affiliated with the NSW Government, Fire and Rescue NSW or Fire Protection Association Australia.</p>
+  </div>
+</main>
+
+<footer class="bottom">
+  <div class="wrap">
+    <span>© 2026 Fire Toad</span>
+    <span><a href="../../features/">Features</a> · <a href="../../pricing/">Pricing</a> · <a href="../../free/">Free downloads</a> · <a href="../../guides/">Guides</a> · <a href="../../support/">Support</a> · <a href="../../press/">Press</a> · <a href="../../privacy/">Privacy policy</a></span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  var URL_SELF = 'https://firetoad72.github.io/firetoad/tools/afss-due-date/';
+
+  // Plain calendar dates {y, m (1-12), d}, worked in UTC so time zones and daylight saving never shift them.
+  function daysInMonth(y, m) { return new Date(Date.UTC(y, m, 0)).getUTCDate(); }
+  function valid(y, m, d) { return y >= 1900 && y <= 2200 && m >= 1 && m <= 12 && d >= 1 && d <= daysInMonth(y, m); }
+  function parse(s) {
+    s = (s || '').trim();
+    var m = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(s);
+    if (m) { var a = { y: +m[1], m: +m[2], d: +m[3] }; return valid(a.y, a.m, a.d) ? a : null; }
+    m = /^(\d{1,2})[\/.\-](\d{1,2})[\/.\-](\d{4})$/.exec(s);
+    if (m) { var b = { y: +m[3], m: +m[2], d: +m[1] }; return valid(b.y, b.m, b.d) ? b : null; }
+    return null;
+  }
+  function addMonths(dt, n) {
+    var idx = dt.y * 12 + (dt.m - 1) + n;
+    var y = Math.floor(idx / 12), m = idx - y * 12 + 1;
+    return { y: y, m: m, d: Math.min(dt.d, daysInMonth(y, m)) };
+  }
+  function addDays(dt, n) {
+    var t = new Date(Date.UTC(dt.y, dt.m - 1, dt.d + n));
+    return { y: t.getUTCFullYear(), m: t.getUTCMonth() + 1, d: t.getUTCDate() };
+  }
+  function serial(dt) { return Math.round(Date.UTC(dt.y, dt.m - 1, dt.d) / 86400000); }
+  function diff(a, b) { return serial(b) - serial(a); }
+  function today() { var n = new Date(); return { y: n.getFullYear(), m: n.getMonth() + 1, d: n.getDate() }; }
+  function weekday(dt) { return DAYS[new Date(Date.UTC(dt.y, dt.m - 1, dt.d)).getUTCDay()]; }
+  function long(dt) { return weekday(dt) + ' ' + dt.d + ' ' + MONTHS[dt.m - 1] + ' ' + dt.y; }
+  function short(dt) { return dt.d + ' ' + MONTHS[dt.m - 1] + ' ' + dt.y; }
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function ymd(dt) { return '' + dt.y + pad(dt.m) + pad(dt.d); }
+  function iso(dt) { return dt.y + '-' + pad(dt.m) + '-' + pad(dt.d); }
+  function plural(n, w) { return n + ' ' + w + (n === 1 ? '' : 's'); }
+
+  var form = document.getElementById('afss-form');
+  var dateEl = document.getElementById('date');
+  var issueEl = document.getElementById('issue');
+  var bldgEl = document.getElementById('bldg');
+  var err = document.getElementById('err');
+  var result = document.getElementById('result');
+  var last = null;
+
+  function fail(el, msg) {
+    err.textContent = msg;
+    el.setAttribute('aria-invalid', 'true');
+    el.focus();
+  }
+
+  function compute(basis, date, issueIn, now) {
+    var due = basis === 'due' ? date : addMonths(date, 12);
+    var left = diff(now, due);
+    var issue = issueIn, issueNote = null;
+    if (!issue) {
+      if (left < 0) { issue = now; issueNote = 'today'; } else { issue = due; issueNote = 'due'; }
+    }
+    var start = addDays(addMonths(issue, -3), 1);
+    return { basis: basis, date: date, due: due, left: left, issue: issue, issueNote: issueNote, start: start, next: addMonths(due, 12), now: now };
+  }
+
+  function render(r) {
+    document.getElementById('res-due').textContent = long(r.due);
+    var pill = document.getElementById('res-pill');
+    if (r.left > 1) { pill.textContent = 'In ' + r.left + ' days'; }
+    else if (r.left === 1) { pill.textContent = 'Tomorrow'; }
+    else if (r.left === 0) { pill.textContent = 'Due today'; }
+    else { pill.textContent = 'Overdue by ' + plural(-r.left, 'day'); }
+    pill.className = 'pill ' + (r.left < 0 ? 'late' : r.left <= 30 ? 'soon' : 'ok');
+
+    var w = document.getElementById('res-window');
+    var lead = r.issueNote === 'today' ? 'For a statement issued today (' + short(r.issue) + ')'
+      : r.issueNote === 'due' ? 'For a statement issued on the due date (' + short(r.issue) + ')'
+      : 'For a statement issued on ' + short(r.issue);
+    w.innerHTML = '';
+    w.appendChild(document.createTextNode(lead + ', the measures must be assessed and the exits inspected between '));
+    var b1 = document.createElement('strong'); b1.textContent = short(r.start); w.appendChild(b1);
+    w.appendChild(document.createTextNode(' and '));
+    var b2 = document.createElement('strong'); b2.textContent = short(r.issue); w.appendChild(b2);
+    w.appendChild(document.createTextNode('.'));
+    var sm = document.createElement('small');
+    var toStart = diff(r.now, r.start), toIssue = diff(r.now, r.issue);
+    if (toStart > 0) sm.textContent = 'The window opens in ' + plural(toStart, 'day') + '. An assessment done before ' + short(r.start) + ' would be too early for this issue date.';
+    else if (toIssue >= 0) sm.textContent = 'The window is open now.';
+    else sm.textContent = 'This window has closed.';
+    w.appendChild(sm);
+
+    document.getElementById('res-next').textContent = r.left < 0
+      ? 'About 12 months after the overdue statement is given to the council. Check the new date with the council.'
+      : 'About ' + short(r.next) + ', if this statement is given to the council on its due date. Councils count this differently, so check the date they then hold.';
+
+    var notes = document.getElementById('res-notes');
+    notes.innerHTML = '';
+    function note(text, warn) { var li = document.createElement('li'); li.textContent = text; if (warn) li.className = 'warn'; notes.appendChild(li); }
+    if (r.left < 0) {
+      note('This due date has passed. Contact the council now: councils can issue a penalty notice for each week a statement is late. If a statement has been given since, enter that date instead.', true);
+    } else if (r.left === 0) {
+      note('Due today. If the statement cannot be given to the council today, contact the council now.', true);
+    } else if (r.left <= 30) {
+      note('Due within 30 days. Leave time for any defects to be fixed and reassessed before the owner signs.', false);
+    }
+    if (r.basis !== 'due' && diff(r.now, r.date) > 0) {
+      note('The date you entered is in the future. Check it is the date of the last statement or certificate.', true);
+    }
+    if (r.issueNote === null && diff(r.due, r.issue) > 0) {
+      note('That issue date is after the due date. The council needs the statement by ' + short(r.due) + '.', true);
+    }
+    if (r.issueNote === null && diff(r.now, r.issue) < 0) {
+      note('The planned issue date has already passed.', false);
+    }
+    if (r.date.m === 2 && r.date.d === 29) {
+      note('The date you entered is 29 February. The helper has used 28 February in the following year; the council may use 1 March.', false);
+    }
+    notes.hidden = !notes.children.length;
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    err.textContent = '';
+    dateEl.removeAttribute('aria-invalid');
+    issueEl.removeAttribute('aria-invalid');
+    var basis = form.querySelector('input[name=basis]:checked').value;
+    var date = parse(dateEl.value);
+    if (!date) { result.hidden = true; return fail(dateEl, dateEl.value ? 'That date is not valid. Use the date picker, or type it as dd/mm/yyyy.' : 'Enter a date to work from.'); }
+    var issue = null;
+    if (issueEl.value.trim()) {
+      issue = parse(issueEl.value);
+      if (!issue) { result.hidden = true; return fail(issueEl, 'The planned issue date is not valid. Use the date picker, type it as dd/mm/yyyy, or leave it blank.'); }
+    }
+    last = compute(basis, date, issue, today());
+    render(last);
+    result.hidden = false;
+    document.getElementById('res-h').focus();
+  });
+
+  // Calendar file (RFC 5545), built on the device.
+  function esc(s) { return String(s).replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\r?\n/g, '\\n'); }
+  function fold(line) {
+    var out = [], cur = '', len = 0;
+    for (var i = 0; i < line.length; i++) {
+      var ch = line[i], code = line.charCodeAt(i);
+      var bytes = code < 0x80 ? 1 : code < 0x800 ? 2 : (code >= 0xd800 && code <= 0xdbff) ? 4 : 3;
+      if (code >= 0xdc00 && code <= 0xdfff) bytes = 0;
+      if (len + bytes > (out.length ? 74 : 75)) { out.push(cur); cur = ''; len = 0; }
+      cur += ch; len += bytes;
+    }
+    out.push(cur);
+    return out.join('\r\n ');
+  }
+  function stamp() {
+    var n = new Date();
+    return n.getUTCFullYear() + pad(n.getUTCMonth() + 1) + pad(n.getUTCDate()) + 'T' + pad(n.getUTCHours()) + pad(n.getUTCMinutes()) + pad(n.getUTCSeconds()) + 'Z';
+  }
+  function uid(kind, dt) { return 'afss-' + kind + '-' + ymd(dt) + '-' + Math.random().toString(36).slice(2, 10) + '@firetoad72.github.io'; }
+  function event(lines, o) {
+    lines.push('BEGIN:VEVENT', 'UID:' + uid(o.kind, o.date), 'DTSTAMP:' + stamp(), 'DTSTART;VALUE=DATE:' + ymd(o.date), 'DTEND;VALUE=DATE:' + ymd(addDays(o.date, 1)),
+      'SUMMARY:' + esc(o.summary), 'DESCRIPTION:' + esc(o.description), 'URL:' + URL_SELF, 'TRANSP:TRANSPARENT');
+    (o.alarms || []).forEach(function (a) {
+      lines.push('BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:' + esc(a.text), 'TRIGGER:-P' + a.days + 'D', 'END:VALARM');
+    });
+    lines.push('END:VEVENT');
+  }
+  function buildIcs(r, building) {
+    var label = building ? ': ' + building : '';
+    var basisText = r.basis === 'afss' ? 'the last annual fire safety statement given to the council on ' + short(r.date)
+      : r.basis === 'fsc' ? 'the fire safety certificate issued on ' + short(r.date)
+      : 'the council due date of ' + short(r.date);
+    var common = 'Worked out by the Fire Toad AFSS due-date helper from ' + basisText + '. Check the date with the council: the building\'s own anniversary governs. Critical fire safety measures need supplementary statements on their own cycle. A helper, not legal advice.';
+    var lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Fire Toad//AFSS due-date helper//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH'];
+    event(lines, {
+      kind: 'due', date: r.due, summary: 'AFSS due' + label,
+      description: 'Annual fire safety statement (NSW) due to the council. Then send a copy with the current fire safety schedule to Fire and Rescue NSW and display a copy in the building.\n\n' + common,
+      alarms: [{ days: 30, text: 'AFSS due in 30 days' + label }, { days: 7, text: 'AFSS due in 7 days' + label }]
+    });
+    event(lines, {
+      kind: 'window', date: r.start, summary: 'AFSS assessment window opens' + label,
+      description: 'From today, assessments of the essential fire safety measures and the exit inspection fall within the 3 months before an annual fire safety statement issued on ' + short(r.issue) + '.\n\n' + common
+    });
+    lines.push('END:VCALENDAR');
+    return lines.map(fold).join('\r\n') + '\r\n';
+  }
+
+  document.getElementById('ics').addEventListener('click', function () {
+    if (!last) return;
+    var building = bldgEl.value.replace(/[\u0000-\u001f]/g, ' ').trim().slice(0, 80);
+    var text = buildIcs(last, building);
+    var blob = new Blob([text], { type: 'text/calendar;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'afss-due-' + iso(last.due) + '.ics';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+  });
+})();
+</script>
+</body>
+</html>

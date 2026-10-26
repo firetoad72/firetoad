@@ -2,6 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://firetoad72.github.io/firetoad/</loc>
+    <lastmod>2026-10-25</lastmod>
+  </url>
+  <url>
+    <loc>https://firetoad72.github.io/firetoad/features/</loc>
+    <lastmod>2026-10-25</lastmod>
+  </url>
+  <url>
+    <loc>https://firetoad72.github.io/firetoad/pricing/</loc>
+    <lastmod>2026-10-25</lastmod>
+  </url>
+  <url>
+    <loc>https://firetoad72.github.io/firetoad/press/</loc>
+    <lastmod>2026-10-25</lastmod>
   </url>
   <url>
     <loc>https://firetoad72.github.io/firetoad/support/</loc>
@@ -23,6 +36,14 @@
   </url>
   <url>
     <loc>https://firetoad72.github.io/firetoad/guides/critical-defects/</loc>
+    <lastmod>2026-10-25</lastmod>
+  </url>
+  <url>
+    <loc>https://firetoad72.github.io/firetoad/free/</loc>
+    <lastmod>2026-10-25</lastmod>
+  </url>
+  <url>
+    <loc>https://firetoad72.github.io/firetoad/tools/afss-due-date/</loc>
     <lastmod>2026-10-25</lastmod>
   </url>
 </urlset>
